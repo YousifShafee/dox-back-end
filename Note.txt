@@ -1,21 +1,15 @@
 
-    install docker app on windows from:
-        https://docs.docker.com/get-docker/
+run project surver
+    python manage.py runserver
 
-    open terminal on project directory root
+build new changes in database
+    python manage.py makemigrations
 
-    to run project server:
-        run command:
-            docker build -t dox_web .
-        then run command:
-            docker run -p 8000:8000 dox_web
-    
-    to stop project server:
-        run command:
-            docker ps           // to get <CONTAINER ID> value of project
-        then run command:
-            docker stop <CONTAINER ID>
+run new changes in database
+    python manage.py migrate
 
-    
-    valid url:
-        localhost:8000/admin
+create new superuser admin
+    python manage.py createsuperuser
+
+install pip dependency for porject
+    pip install -r requirements.txt
