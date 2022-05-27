@@ -166,7 +166,7 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.CreateModel(
-            name='Electonic_ad',
+            name='Electronic_ad',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('price', models.CharField(choices=[('1000 - 5000', '1000 - 5000'), ('5000 - 10000', '5000 - 10000'), ('10000 - 20000', '10000 - 20000'), ('20000 - 50000', '20000 - 50000'), ('50000 - 100000', '50000 - 100000')], default='', max_length=15)),
