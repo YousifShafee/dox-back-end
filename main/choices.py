@@ -37,7 +37,8 @@ gender_type = (
 action_level = (
     (("Delete"), ("مسح")),
     (("Update"), ("تعديل")),
-    (("Admin"), ("ادمن"))
+    (("Admin"), ("ادمن")),
+    (("Normal"), ("عادي"))
 )
 
 sale_or_rent = (
@@ -235,7 +236,7 @@ medical_type_c = (
     (('dialysis'), ('غسيل كلوى')),
 )
 
-electonic_price_c = (
+electronic_price_c = (
     (('1000 - 5000'), ('1000 - 5000')),
     (('5000 - 10000'), ('5000 - 10000')),
     (('10000 - 20000'), ('10000 - 20000')),
@@ -243,7 +244,7 @@ electonic_price_c = (
     (('50000 - 100000'), ('50000 - 100000')),
 )
 
-electonic_brand_c = (
+electronic_brand_c = (
     (('sharp'), ('شارب')),
     (('Samsung'), ('سامسونج')),
     (('LG'), ('ال جى')),
@@ -253,7 +254,7 @@ electonic_brand_c = (
     (('Toshiba'), ('توشيبا')),
 )
 
-electonic_type_c = (
+electronic_type_c = (
     (('microwave'), ('مايكروويف')),
     (('cleaning devices'), ('اجهزة نظافة')),
     (('furnaces'), ('افران')),
