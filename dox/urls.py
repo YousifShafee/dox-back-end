@@ -10,9 +10,11 @@ urlpatterns = [
     path('main/furniture/', include('main.furniture.urls')),
     path('main/medical/', include('main.medical.urls')),
     path('main/mobile/', include('main.mobile.urls')),
+    path('main/ad/', include('main.ad.urls')),
     path('main/user/', include('main.user.urls')),
     path('main/image/', include('main.image.urls')),
-    path('admin/', admin.site.urls),
+    path('main/properties/', include('main.properties.urls')),
+    path('admin/', admin.site.urls)
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
