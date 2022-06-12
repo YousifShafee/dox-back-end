@@ -7,4 +7,5 @@ urlpatterns = [
     url(r'^(?P<pk>\d+)/$', MobileDetails.as_view(), name="mobile-details"),
     url(r'^(?P<pk>\d+)/edit/$', MobileUpdate.as_view(), name="mobile-update"),
     url(r'^(?P<pk>\d+)/delete/$', MobileDelete.as_view(), name="mobile-delete"),
+    url(r'^search/$', MobileSearch.as_view(), name="mobile-search"),
 ]

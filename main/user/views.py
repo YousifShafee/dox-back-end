@@ -1,18 +1,15 @@
-from rest_framework import generics
+from pyparsing import empty
+from main.general_fun import get_data_by_field
+from rest_framework import generics, authentication
 from rest_framework.views import APIView
 from datetime import date, datetime
 from rest_framework.response import Response
 from rest_framework_jwt.settings import api_settings
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAdminUser, IsAuthenticatedOrReadOnly
 from django.contrib.auth import authenticate, login as auth_login, logout
-from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST
+from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST, HTTP_404_NOT_FOUND
 from datetime import date
-from .serializers import (
-    UsersSerializer,
-    AllDataSerializer,
-    UserCreateSerializer,
-    UserLoginSerializer,
-)
+from .serializers import *
 from main.models import User
 
 model_name = User
@@ -31,6 +28,7 @@ class UserCreateAPIView(generics.CreateAPIView):
 class UserList(generics.ListAPIView):
     queryset = model_name.objects.all()
     serializer_class = UsersSerializer
+    permission_classes = [AllowAny]
 
 
 def delete(request):
@@ -40,28 +38,28 @@ def delete(request):
 class UserDetails(generics.RetrieveAPIView):
     queryset = model_name.objects.all()
     serializer_class = UsersSerializer
+    authentication_classes = [authentication.SessionAuthentication]
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
 
 class UserDelete(generics.DestroyAPIView):
     queryset = model_name.objects.all()
     serializer_class = UsersSerializer
-
-
-class UserUpdate(generics.RetrieveUpdateAPIView):
-    queryset = model_name.objects.all()
-    serializer_class = AllDataSerializer
-
-    def perform_update(self, serializer):
-        serializer.save(updated_at=date.today())
-
-
-class UserCreateAPIView(generics.CreateAPIView):
-    serializer_class = UserCreateSerializer
-    queryset = User.objects.all()
     permission_classes = [AllowAny]
 
-    def perform_create(self, serializer):
-        serializer.save(created_at=date.today())
+
+class UserUpdate(APIView):
+    queryset = model_name.objects.all()
+    serializer_class = EditSerializer
+    permission_classes = [AllowAny]                # TODO remove this line after finish user sission
+
+    def post(self, request, pk):
+        serializer = EditSerializer.validate(self, data=request.data, pk=pk)
+        if serializer:
+            return Response(status=HTTP_200_OK)
+        return Response(status=HTTP_404_NOT_FOUND)
+        
+
 
 
 class UserLoginAPIView(APIView):
@@ -92,8 +90,7 @@ class UserLoginAPIView(APIView):
                                     httponly=True)
             login(request)
             response.data['id'] = user.id
-            response.data['username'] = user.username
-            response.data['img'] = user.img
+            response.data['email'] = user.email
             return response
 
         return Response("Incorrect credentials, Please Try Again", status=HTTP_400_BAD_REQUEST)
@@ -101,9 +98,9 @@ class UserLoginAPIView(APIView):
 
 def login(request):
     msg = []
-    username = request.POST['username']
+    email = request.POST['email']
     password = request.POST['password']
-    user = authenticate(username=username, password=password)
+    user = authenticate(email=email, password=password)
     if user is not None:
         if user.is_active:
             auth_login(request, user)
@@ -120,3 +117,59 @@ class Logout(APIView):
     def get(self, request, format=None):
         logout(request)
         return Response(status=HTTP_200_OK)
+
+class ConfirmAccount(APIView):
+    permission_classes = [AllowAny]
+    serializer_class = ConfirmAccountSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = ConfirmAccountSerializer.validate(self, data=request.data)
+        if serializer:
+            return Response(serializer, status=HTTP_200_OK)
+        return Response(status=HTTP_404_NOT_FOUND)
+
+
+class SendCode(APIView):
+    permission_classes = [AllowAny]
+    serializer_class = SendCodeSerializer
+    
+    def post(self, request):
+        serializer = SendCodeSerializer.validate(self, data=request.data)
+        if serializer:
+            return Response(status=HTTP_200_OK)
+        return Response(status=HTTP_404_NOT_FOUND)
+
+
+class ChangePass(generics.RetrieveUpdateAPIView):
+    queryset = model_name.objects.all()
+    serializer_class = ChangePassSerializer
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        serializer = ChangePassSerializer.validate(self, data=request.data)
+        if serializer:
+            return Response(status=HTTP_200_OK)
+        return Response(status=HTTP_404_NOT_FOUND)
+
+
+class UserSearch(APIView):
+    queryset = model_name.objects.all()
+    serializer_class = UsersSerializer
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        q = get_data_by_field(request.data, search_dict)
+        del q['price__range']
+        if q is empty:
+            model_data = model_name.objects.all()
+        else:
+            model_data = model_name.objects.filter(**q)
+        result = UsersSerializer(model_data, many=True).data
+        return Response(result)
+
+
+search_dict = {
+    'first_name': 'first_name__contains',
+    'last_name': 'last_name__contains',
+    'price': 'price__range',
+}

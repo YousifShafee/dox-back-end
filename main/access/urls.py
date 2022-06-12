@@ -7,4 +7,5 @@ urlpatterns = [
     url(r'^(?P<pk>\d+)/$', AccessDetails.as_view(), name="access-details"),
     url(r'^(?P<pk>\d+)/edit/$', AccessUpdate.as_view(), name="access-update"),
     url(r'^(?P<pk>\d+)/delete/$', AccessDelete.as_view(), name="access-delete"),
+    url(r'^search/$', AccessSearch.as_view(), name="access-search"),
 ]
