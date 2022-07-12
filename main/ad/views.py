@@ -33,7 +33,6 @@ class AdDelete(generics.DestroyAPIView):
 class AdCreate(generics.CreateAPIView):
     queryset = model_name.objects.all()
     permission_classes = [AllowAny]
-    # permission_classes = [IsAuthenticated]             TODO uncomment this line and remove previous
     serializer_class = AdSerializer
 
     def post(self, request):
@@ -47,6 +46,7 @@ class AdCreate(generics.CreateAPIView):
             ad_image=image,
             user=user,
             ad_name=request.data['ad_name'],
+            ad_type = request.data['ad_type'],
             description=request.data['description'],
         )
         ad.save()
@@ -57,17 +57,6 @@ class AdUpdate(generics.RetrieveUpdateAPIView):
     queryset = model_name.objects.all()
     serializer_class = AdSerializer
     permission_classes = [AllowAny]
-    # permission_classes = [IsAuthenticated]             TODO uncomment this line and remove previous
-
-    def perform_update(self, serializer):
-        serializer.save(updated_at=date.today())
-
-
-class ActiveAdUpdate(generics.RetrieveUpdateAPIView):
-    queryset = model_name.objects.all()
-    serializer_class = ActiveAdSerializer
-    permission_classes = [AllowAny]
-    # permission_classes = [IsAuthenticated]             TODO uncomment this line and remove previous
 
     def perform_update(self, serializer):
         serializer.save(updated_at=date.today())
@@ -86,7 +75,6 @@ class AdSearch(views.APIView):
 
 
 search_dict = {
-    'payment_n': 'payment_n__contains',
     'ad_name': 'ad_name__contains',
     'price': 'price__range',
 }

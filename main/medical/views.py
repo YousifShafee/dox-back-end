@@ -1,6 +1,6 @@
 from datetime import date
-from rest_framework import generics, views, response
-from .serializers import MedicalSerializer
+from rest_framework import generics, views, response, status
+from .serializers import MedicalSerializer, MedicalCreateSerializer, MedicalUpdateSerializer
 from main.models import Medical_ad
 from main.general_fun import get_data_by_field
 from rest_framework.permissions import AllowAny
@@ -11,6 +11,12 @@ class MedicalList(generics.ListAPIView):
     queryset = model_name.objects.all()
     serializer_class = MedicalSerializer
     permission_classes = [AllowAny]
+
+    def get_queryset(self):
+        if 'user_id' in self.kwargs:
+            return model_name.objects.filter(ad_id__user__id=self.kwargs['user_id'])
+        else:
+            return model_name.objects.all()
 
 
 class MedicalDetails(generics.RetrieveAPIView):
@@ -26,18 +32,22 @@ class MedicalDelete(generics.DestroyAPIView):
 
 class MedicalCreate(generics.CreateAPIView):
     queryset = model_name.objects.all()
-    serializer_class = MedicalSerializer
+    serializer_class = MedicalCreateSerializer
+    permission_classes = [AllowAny]
 
-    def perform_create(self, serializer):
-        serializer.save(created_at=date.today())
+    def post(self, request):
+        MedicalCreateSerializer.validate(self, data=request.data)
+        return response.Response(status=status.HTTP_201_CREATED)
 
 
 class MedicalUpdate(generics.RetrieveUpdateAPIView):
     queryset = model_name.objects.all()
-    serializer_class = MedicalSerializer
+    serializer_class = MedicalUpdateSerializer
+    permission_classes = [AllowAny]
 
-    def perform_update(self, serializer):
-        serializer.save(updated_at=date.today())
+    def put(self, request, pk):
+        MedicalUpdateSerializer.validate(self, data=request.data, pk=pk)
+        return response.Response(status=status.HTTP_200_OK)
 
 
 class MedicalSearch(views.APIView):

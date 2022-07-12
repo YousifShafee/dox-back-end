@@ -1,7 +1,7 @@
 from main.general_fun import get_data_by_field
 from datetime import date
-from rest_framework import generics, views, response
-from .serializers import AccessSerializer
+from rest_framework import generics, views, response, status
+from .serializers import AccessSerializer, AccessCreateSerializer, AccessUpdateSerializer
 from main.models import Access_ad
 from rest_framework.permissions import AllowAny
 
@@ -11,6 +11,12 @@ class AccessList(generics.ListAPIView):
     permission_classes = [AllowAny]
     queryset = model_name.objects.all()
     serializer_class = AccessSerializer
+
+    def get_queryset(self):
+        if 'user_id' in self.kwargs:
+            return model_name.objects.filter(ad_id__user__id=self.kwargs['user_id'])
+        else:
+            return model_name.objects.all()
 
 
 class AccessDetails(generics.RetrieveAPIView):
@@ -27,17 +33,21 @@ class AccessDelete(generics.DestroyAPIView):
 class AccessCreate(generics.CreateAPIView):
     queryset = model_name.objects.all()
     serializer_class = AccessSerializer
+    permission_classes = [AllowAny]
 
-    def perform_create(self, serializer):
-        serializer.save(created_at=date.today())
+    def post(self, request):
+        AccessCreateSerializer.validate(self, data=request.data)
+        return response.Response(status=status.HTTP_201_CREATED)
 
 
 class AccessUpdate(generics.RetrieveUpdateAPIView):
     queryset = model_name.objects.all()
-    serializer_class = AccessSerializer
+    permission_classes = [AllowAny]
+    serializer_class = AccessUpdateSerializer
 
-    def perform_update(self, serializer):
-        serializer.save(updated_at=date.today())
+    def put(self, request, pk):
+        AccessUpdateSerializer.validate(self, data=request.data, pk=pk)
+        return response.Response(status=status.HTTP_200_OK)
 
 
 class AccessSearch(views.APIView):

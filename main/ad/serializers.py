@@ -11,9 +11,3 @@ class AdSerializer(ModelSerializer):
     class Meta:
         model = Advertisement
         fields = '__all__'
-
-class ActiveAdSerializer(ModelSerializer):
-    
-    class Meta:
-        model = Advertisement
-        fields = ['is_active']

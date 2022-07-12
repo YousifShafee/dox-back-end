@@ -5,4 +5,10 @@ from main.models import Image
 class ImageSerializer(ModelSerializer):
     class Meta:
         model = Image
-        fields = ['id', 'images', 'category']
+        fields = '__all__'
+
+
+class ActiveImageSerializer(ModelSerializer):    
+    class Meta:
+        model = Image
+        fields = ['is_active']

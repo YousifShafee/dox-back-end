@@ -1,8 +1,8 @@
 from main.general_fun import get_data_by_field
 from datetime import date
 from rest_framework.permissions import AllowAny
-from rest_framework import generics, views, response
-from .serializers import CarSalesSerializer, CarRentSerializer
+from rest_framework import generics, views, response, status
+from .serializers import CarSalesSerializer, CarRentSerializer, CarSalesCreateSerializer, CarRentCreateSerializer, CarRentUpdateSerializer, CarSalesUpdateSerializer
 from main.models import Car_Rent, Car_Sales
 
 
@@ -10,6 +10,12 @@ class CarSalesList(generics.ListAPIView):
     queryset = Car_Sales.objects.all()
     serializer_class = CarSalesSerializer
     permission_classes = [AllowAny]
+
+    def get_queryset(self):
+        if 'user_id' in self.kwargs:
+            return Car_Sales.objects.filter(ad_id__user__id=self.kwargs['user_id'])
+        else:
+            return Car_Sales.objects.all()
 
 
 class CarSalesDetails(generics.RetrieveAPIView):
@@ -25,18 +31,22 @@ class CarSalesDelete(generics.DestroyAPIView):
 
 class CarSalesCreate(generics.CreateAPIView):
     queryset = Car_Sales.objects.all()
-    serializer_class = CarSalesSerializer
+    serializer_class = CarSalesCreateSerializer
+    permission_classes = [AllowAny]
 
-    def perform_create(self, serializer):
-        serializer.save(created_at=date.today())
+    def post(self, request):
+        CarSalesCreateSerializer.validate(self, data=request.data)
+        return response.Response(status=status.HTTP_201_CREATED)
 
 
 class CarSalesUpdate(generics.RetrieveUpdateAPIView):
     queryset = Car_Sales.objects.all()
-    serializer_class = CarSalesSerializer
+    serializer_class = CarSalesUpdateSerializer
+    permission_classes = [AllowAny]
 
-    def perform_update(self, serializer):
-        serializer.save(updated_at=date.today())
+    def put(self, request, pk):
+        CarSalesUpdateSerializer.validate(self, data=request.data, pk=pk)
+        return response.Response(status=status.HTTP_200_OK)
 
 
 class CarSalesSearch(views.APIView):
@@ -56,6 +66,12 @@ class CarRentList(generics.ListAPIView):
     serializer_class = CarRentSerializer
     permission_classes = [AllowAny]
 
+    def get_queryset(self):
+        if 'user_id' in self.kwargs:
+            return Car_Rent.objects.filter(ad_id__user__id=self.kwargs['user_id'])
+        else:
+            return Car_Rent.objects.all()
+
 
 class CarRentDetails(generics.RetrieveAPIView):
     queryset = Car_Rent.objects.all()
@@ -70,18 +86,22 @@ class CarRentDelete(generics.DestroyAPIView):
 
 class CarRentCreate(generics.CreateAPIView):
     queryset = Car_Rent.objects.all()
-    serializer_class = CarRentSerializer
+    serializer_class = CarRentCreateSerializer
+    permission_classes = [AllowAny]
 
-    def perform_create(self, serializer):
-        serializer.save(created_at=date.today())
+    def post(self, request):
+        CarRentCreateSerializer.validate(self, data=request.data)
+        return response.Response(status=status.HTTP_201_CREATED)
 
 
 class CarRentUpdate(generics.RetrieveUpdateAPIView):
     queryset = Car_Rent.objects.all()
-    serializer_class = CarRentSerializer
+    serializer_class = CarRentUpdateSerializer
+    permission_classes = [AllowAny]
 
-    def perform_update(self, serializer):
-        serializer.save(updated_at=date.today())
+    def put(self, request, pk):
+        CarRentUpdateSerializer.validate(self, data=request.data, pk=pk)
+        return response.Response(status=status.HTTP_200_OK)
 
 
 class CarRentSearch(views.APIView):
@@ -107,7 +127,7 @@ search_dict = {
     'transmission_type': 'car__transmission_type',
     'fuel_type': 'car__fuel_type',
     'engine_capacity': 'car__engine_capacity',
-    'ad_type': 'ad_type',
+    'offer_type': 'offer_type',
     'body_type': 'car__body_type',
     'rental_option': 'car__rental_option',
     'rental_period': 'car__rental_period',

@@ -1,7 +1,7 @@
 from main.general_fun import get_data_by_field
 from datetime import date
-from rest_framework import generics, views, response
-from .serializers import ElectronicSerializer
+from rest_framework import generics, views, response, status
+from .serializers import ElectronicSerializer, ElectronicCreateSerializer, ElectronicUpdateSerializer
 from main.models import Electronic_ad
 from rest_framework.permissions import AllowAny
 
@@ -11,6 +11,12 @@ class ElectronicList(generics.ListAPIView):
     queryset = model_name.objects.all()
     serializer_class = ElectronicSerializer
     permission_classes = [AllowAny]
+
+    def get_queryset(self):
+        if 'user_id' in self.kwargs:
+            return model_name.objects.filter(ad_id__user__id=self.kwargs['user_id'])
+        else:
+            return model_name.objects.all()
 
 
 class ElectronicDetails(generics.RetrieveAPIView):
@@ -26,18 +32,22 @@ class ElectronicDelete(generics.DestroyAPIView):
 
 class ElectronicCreate(generics.CreateAPIView):
     queryset = model_name.objects.all()
-    serializer_class = ElectronicSerializer
+    serializer_class = ElectronicCreateSerializer
+    permission_classes = [AllowAny]
 
-    def perform_create(self, serializer):
-        serializer.save(created_at=date.today())
+    def post(self, request):
+        ElectronicCreateSerializer.validate(self, data=request.data)
+        return response.Response(status=status.HTTP_201_CREATED)
 
 
 class ElectronicUpdate(generics.RetrieveUpdateAPIView):
     queryset = model_name.objects.all()
-    serializer_class = ElectronicSerializer
+    serializer_class = ElectronicUpdateSerializer
+    permission_classes = [AllowAny]
 
-    def perform_update(self, serializer):
-        serializer.save(updated_at=date.today())
+    def put(self, request, pk):
+        ElectronicUpdateSerializer.validate(self, data=request.data, pk=pk)
+        return response.Response(status=status.HTTP_200_OK)
 
 
 class ElectronicSearch(views.APIView):
