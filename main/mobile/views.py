@@ -1,7 +1,7 @@
 from main.general_fun import get_data_by_field
 from datetime import date
-from rest_framework import generics, views, response
-from .serializers import MobileSerializer
+from rest_framework import generics, views, response, status
+from .serializers import MobileSerializer, MobileCreateSerializer, MobileUpdateSerializer
 from main.models import Mobile_ad
 from rest_framework.permissions import AllowAny
 
@@ -12,6 +12,12 @@ class MobileList(generics.ListAPIView):
     queryset = model_name.objects.all()
     serializer_class = MobileSerializer
     permission_classes = [AllowAny]
+
+    def get_queryset(self):
+        if 'user_id' in self.kwargs:
+            return model_name.objects.filter(ad_id__user__id=self.kwargs['user_id'])
+        else:
+            return model_name.objects.all()
 
 
 class MobileDetails(generics.RetrieveAPIView):
@@ -28,17 +34,21 @@ class MobileDelete(generics.DestroyAPIView):
 class MobileCreate(generics.CreateAPIView):
     queryset = model_name.objects.all()
     serializer_class = MobileSerializer
+    permission_classes = [AllowAny]
 
-    def perform_create(self, serializer):
-        serializer.save(created_at=date.today())
+    def post(self, request):
+        MobileCreateSerializer.validate(self, data=request.data)
+        return response.Response(status=status.HTTP_201_CREATED)
 
 
 class MobileUpdate(generics.RetrieveUpdateAPIView):
     queryset = model_name.objects.all()
-    serializer_class = MobileSerializer
+    serializer_class = MobileUpdateSerializer
+    permission_classes = [AllowAny]
 
-    def perform_update(self, serializer):
-        serializer.save(updated_at=date.today())
+    def put(self, request, pk):
+        MobileUpdateSerializer.validate(self, data=request.data, pk=pk)
+        return response.Response(status=status.HTTP_200_OK)
 
 
 class MobileSearch(views.APIView):

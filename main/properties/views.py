@@ -1,7 +1,7 @@
 from main.general_fun import get_data_by_field
 from datetime import date
-from rest_framework import generics, views, response
-from .serializers import PropertiesRentSerializer, PropertiesSalesSerializer
+from rest_framework import generics, views, response, status
+from .serializers import PropertiesRentCreateSerializer, PropertiesRentSerializer, PropertiesSalesSerializer, PropertiesSalesCreateSerializer, PropertiesRentUpdateSerializer, PropertiesSalesUpdateSerializer
 from main.models import Properties_Rent, Properties_Sales
 from rest_framework.permissions import AllowAny
 
@@ -10,6 +10,12 @@ class PropertiesSalesList(generics.ListAPIView):
     queryset = Properties_Sales.objects.all()
     serializer_class = PropertiesSalesSerializer
     permission_classes = [AllowAny]
+
+    def get_queryset(self):
+        if 'user_id' in self.kwargs:
+            return Properties_Sales.objects.filter(ad_id__user__id=self.kwargs['user_id'])
+        else:
+            return Properties_Sales.objects.all()
 
 
 class PropertiesSalesDetails(generics.RetrieveAPIView):
@@ -25,18 +31,22 @@ class PropertiesSalesDelete(generics.DestroyAPIView):
 
 class PropertiesSalesCreate(generics.CreateAPIView):
     queryset = Properties_Sales.objects.all()
-    serializer_class = PropertiesSalesSerializer
+    serializer_class = PropertiesSalesCreateSerializer
+    permission_classes = [AllowAny]
 
-    def perform_create(self, serializer):
-        serializer.save(created_at=date.today())
+    def post(self, request):
+        PropertiesSalesCreateSerializer.validate(self, data=request.data)
+        return response.Response(status=status.HTTP_201_CREATED)
 
 
 class PropertiesSalesUpdate(generics.RetrieveUpdateAPIView):
     queryset = Properties_Sales.objects.all()
-    serializer_class = PropertiesSalesSerializer
+    serializer_class = PropertiesSalesUpdateSerializer
+    permission_classes = [AllowAny]
 
-    def perform_update(self, serializer):
-        serializer.save(updated_at=date.today())
+    def put(self, request, pk):
+        PropertiesSalesUpdateSerializer.validate(self, data=request.data, pk=pk)
+        return response.Response(status=status.HTTP_200_OK)
 
 
 class PropertiesSalesSearch(views.APIView):
@@ -56,6 +66,12 @@ class PropertiesRentList(generics.ListAPIView):
     serializer_class = PropertiesRentSerializer
     permission_classes = [AllowAny]
 
+    def get_queryset(self):
+        if 'user_id' in self.kwargs:
+            return Properties_Rent.objects.filter(ad_id__user__id=self.kwargs['user_id'])
+        else:
+            return Properties_Rent.objects.all()
+
 
 class PropertiesRentDetails(generics.RetrieveAPIView):
     queryset = Properties_Rent.objects.all()
@@ -70,18 +86,22 @@ class PropertiesRentDelete(generics.DestroyAPIView):
 
 class PropertiesRentCreate(generics.CreateAPIView):
     queryset = Properties_Rent.objects.all()
-    serializer_class = PropertiesRentSerializer
+    serializer_class = PropertiesRentCreateSerializer
+    permission_classes = [AllowAny]
 
-    def perform_create(self, serializer):
-        serializer.save(created_at=date.today())
+    def post(self, request):
+        PropertiesRentCreateSerializer.validate(self, data=request.data)
+        return response.Response(status=status.HTTP_201_CREATED)
 
 
 class PropertiesRentUpdate(generics.RetrieveUpdateAPIView):
     queryset = Properties_Rent.objects.all()
-    serializer_class = PropertiesRentSerializer
+    serializer_class = PropertiesRentUpdateSerializer
+    permission_classes = [AllowAny]
 
-    def perform_update(self, serializer):
-        serializer.save(updated_at=date.today())
+    def put(self, request, pk):
+        PropertiesRentUpdateSerializer.validate(self, data=request.data, pk=pk)
+        return response.Response(status=status.HTTP_200_OK)
 
 
 class PropertiesRentSearch(views.APIView):
