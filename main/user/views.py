@@ -4,7 +4,7 @@ from rest_framework import generics, authentication
 from rest_framework.views import APIView
 from datetime import date, datetime
 from rest_framework.response import Response
-from rest_framework_jwt.settings import api_settings
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.permissions import AllowAny, IsAdminUser, IsAuthenticatedOrReadOnly
 from django.contrib.auth import authenticate, login as auth_login, logout
 from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST, HTTP_404_NOT_FOUND
@@ -51,7 +51,6 @@ class UserDelete(generics.DestroyAPIView):
 class UserUpdate(APIView):
     queryset = model_name.objects.all()
     serializer_class = EditSerializer
-    permission_classes = [AllowAny]                # TODO remove this line after finish user sission
 
     def post(self, request, pk):
         serializer = EditSerializer.validate(self, data=request.data, pk=pk)
@@ -60,11 +59,9 @@ class UserUpdate(APIView):
         return Response(status=HTTP_404_NOT_FOUND)
         
 
-
-
 class UserLoginAPIView(APIView):
     permission_classes = [AllowAny]
-    authentication_classes = ()
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
     serializer_class = UserLoginSerializer
 
     def get_serializer_context(self):
@@ -91,6 +88,7 @@ class UserLoginAPIView(APIView):
             login(request)
             response.data['id'] = user.id
             response.data['email'] = user.email
+            response.data['mission'] = user.mission
             return response
 
         return Response("Incorrect credentials, Please Try Again", status=HTTP_400_BAD_REQUEST)
@@ -159,7 +157,6 @@ class UserSearch(APIView):
 
     def post(self, request):
         q = get_data_by_field(request.data, search_dict)
-        del q['price__range']
         if q is empty:
             model_data = model_name.objects.all()
         else:
@@ -171,5 +168,4 @@ class UserSearch(APIView):
 search_dict = {
     'first_name': 'first_name__contains',
     'last_name': 'last_name__contains',
-    'price': 'price__range',
 }
