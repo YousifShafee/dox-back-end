@@ -22,13 +22,14 @@ def get_data_by_field(request, search_dict):
         if request[item] != '' and request[item] != 'NaN':
             if item in search_dict and search_dict[item]:
                 q[search_dict[item]] = u'%s' % request[item]
-    if 'fprice' not in request or request['fprice'] == 'NaN':
-        fprice = 0
-    else:
-        fprice = request['fprice']
-    if 'lprice' not in request or request['lprice'] == 'NaN':
-        lprice = Advertisement.objects.all().aggregate(Max('price'))['price__max']
-    else:
-        lprice = request['lprice']
-    q[search_dict['price']] = [fprice, lprice]
+    if 'price' in search_dict:
+        if 'fprice' not in request or request['fprice'] == 'NaN':
+            fprice = 0
+        else:
+            fprice = request['fprice']
+        if 'lprice' not in request or request['lprice'] == 'NaN':
+            lprice = Advertisement.objects.all().aggregate(Max('price'))['price__max']
+        else:
+            lprice = request['lprice']
+        q[search_dict['price']] = [fprice, lprice]
     return q

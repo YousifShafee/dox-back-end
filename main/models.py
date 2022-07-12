@@ -103,7 +103,10 @@ class User(AbstractBaseUser):
 
 class Image(models.Model):
     images = models.ImageField(upload_to="images/")
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     category = models.CharField(max_length=35, default='', choices=image_category)
+    payment_n = models.CharField(max_length=200, default='', blank=True, null=True)
+    is_active = models.BooleanField(default=False)
     created_date = models.DateTimeField(default=timezone.now)
     
     def __str__(self):
@@ -114,12 +117,12 @@ class Advertisement(models.Model):
     ad_image = models.ForeignKey(Image, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     ad_name = models.CharField(max_length=200, default='')
-    amount = models.IntegerField(default=0)
+    ad_type = models.CharField(max_length=200, default='', choices=ad_type)
+    product_id = models.IntegerField(default=0)
+    amount = models.IntegerField(default=1)
     price = models.IntegerField(default=0)
     created_date = models.DateTimeField(default=timezone.now)
     description = models.TextField(max_length=4096, default='')
-    payment_n = models.CharField(max_length=200, default='', blank=True, null=True)
-    is_active = models.BooleanField(default=False)
 
     def __str__(self):
         return str(self.user.email) + ' - ' + self.ad_name
@@ -138,7 +141,7 @@ class Car(models.Model):
     brand = models.ForeignKey(Car_Brand, on_delete=models.CASCADE, null=True)
     fuel_type = models.CharField(max_length=35, default='', choices=fuel_c)
     engine_capacity = models.IntegerField(default=0)
-    year = models.DateField()
+    year = models.DateField(default=timezone.now)
     color = models.CharField(max_length=35, default='', choices=color_c)
     transmission_type = models.CharField(max_length=35, default='', choices=transmission_c)
     condition = models.CharField(max_length=35, default='', choices=condition_c)
@@ -162,7 +165,7 @@ class Car_Sales(models.Model):
     ad_id = models.ForeignKey(Advertisement, on_delete=models.CASCADE)
     car = models.ForeignKey(Car, on_delete=models.CASCADE)
     kilometer = models.IntegerField(default=0)
-    ad_type = models.CharField(max_length=35, default='', choices=sale_or_rent)
+    offer_type = models.CharField(max_length=35, default='', choices=sale_or_rent)
 
     def __str__(self):
         return str(self.ad_id) + ' - ' + str(self.car)
@@ -174,8 +177,7 @@ class Properties(models.Model):
     type = models.CharField(max_length=35, default='', choices=properties_type_c)
     furnished = models.BooleanField(default=False)
     compound = models.CharField(max_length=35, default='', choices=compound_c)
-    amenities = MultiSelectField(choices=amenities_c)
-    
+    amenities = MultiSelectField(choices=amenities_c)    
     area = models.IntegerField(default=100)
 
     def __str__(self):

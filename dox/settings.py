@@ -15,8 +15,8 @@ DEBUG = True
 ALLOWED_HOSTS = ["*"]
 
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = ''                    # TODO change this email
-EMAIL_HOST_PASSWORD = ''                # TODO change this password
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 

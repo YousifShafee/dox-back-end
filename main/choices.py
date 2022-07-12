@@ -18,6 +18,18 @@ image_category = (
     (("furniture"), ("أثاث منزلي")),
 )
 
+ad_type = (
+    (("car_sales"),("car_sales")),
+    (("car_rent"),("car_rent")),
+    (("property_sales"),("property_sales")),
+    (("property_rent"),("property_rent")),
+    (("mobile"),("mobile")),
+    (("access"),("access")),
+    (("midical"),("midical")),
+    (("electron"),("electron")),
+    (("furniture"),("furniture")),
+)
+
 car_brand = (
     (("فيات"), ("فيات")),
     (("هيونداي"), ("هيونداي")),
