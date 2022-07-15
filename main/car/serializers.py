@@ -129,7 +129,7 @@ class CarSalesCreateSerializer(ModelSerializer):
         ad_id.product_id=car_sales.id
         ad_id.save()
 
-        return data
+        return car_sales
 
 
 class CarRentSerializer(ModelSerializer):
@@ -244,4 +244,4 @@ class CarRentCreateSerializer(ModelSerializer):
         ad_id.product_id=car_rent.id
         ad_id.save()
 
-        return data
+        return car_rent

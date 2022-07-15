@@ -78,4 +78,4 @@ class ElectronicCreateSerializer(ModelSerializer):
         ad_id.product_id=electronic_ad.id
         ad_id.save()
 
-        return data
+        return electronic_ad

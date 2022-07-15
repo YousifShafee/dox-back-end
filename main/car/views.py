@@ -26,6 +26,7 @@ class CarSalesDetails(generics.RetrieveAPIView):
 
 class CarSalesDelete(generics.DestroyAPIView):
     queryset = Car_Sales.objects.all()
+    permission_classes = [AllowAny]
     serializer_class = CarSalesSerializer
 
 
@@ -35,8 +36,8 @@ class CarSalesCreate(generics.CreateAPIView):
     permission_classes = [AllowAny]
 
     def post(self, request):
-        CarSalesCreateSerializer.validate(self, data=request.data)
-        return response.Response(status=status.HTTP_201_CREATED)
+        result = CarSalesCreateSerializer.validate(self, data=request.data)
+        return response.Response({result.id}, status=status.HTTP_201_CREATED)
 
 
 class CarSalesUpdate(generics.RetrieveUpdateAPIView):
@@ -81,6 +82,7 @@ class CarRentDetails(generics.RetrieveAPIView):
 
 class CarRentDelete(generics.DestroyAPIView):
     queryset = Car_Rent.objects.all()
+    permission_classes = [AllowAny]
     serializer_class = CarRentSerializer
 
 
@@ -90,8 +92,8 @@ class CarRentCreate(generics.CreateAPIView):
     permission_classes = [AllowAny]
 
     def post(self, request):
-        CarRentCreateSerializer.validate(self, data=request.data)
-        return response.Response(status=status.HTTP_201_CREATED)
+        result = CarRentCreateSerializer.validate(self, data=request.data)
+        return response.Response(result, status=status.HTTP_201_CREATED)
 
 
 class CarRentUpdate(generics.RetrieveUpdateAPIView):

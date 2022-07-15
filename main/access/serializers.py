@@ -82,4 +82,4 @@ class AccessCreateSerializer(ModelSerializer):
         ad_id.product_id=access_ad.id
         ad_id.save()
 
-        return data
+        return access_ad

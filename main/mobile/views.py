@@ -28,17 +28,18 @@ class MobileDetails(generics.RetrieveAPIView):
 
 class MobileDelete(generics.DestroyAPIView):
     queryset = model_name.objects.all()
+    permission_classes = [AllowAny]
     serializer_class = MobileSerializer
 
 
 class MobileCreate(generics.CreateAPIView):
     queryset = model_name.objects.all()
-    serializer_class = MobileSerializer
+    serializer_class = MobileCreateSerializer
     permission_classes = [AllowAny]
 
     def post(self, request):
-        MobileCreateSerializer.validate(self, data=request.data)
-        return response.Response(status=status.HTTP_201_CREATED)
+        result = MobileCreateSerializer.validate(self, data=request.data)
+        return response.Response(result, status=status.HTTP_201_CREATED)
 
 
 class MobileUpdate(generics.RetrieveUpdateAPIView):

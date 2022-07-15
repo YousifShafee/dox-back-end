@@ -26,6 +26,7 @@ class PropertiesSalesDetails(generics.RetrieveAPIView):
 
 class PropertiesSalesDelete(generics.DestroyAPIView):
     queryset = Properties_Sales.objects.all()
+    permission_classes = [AllowAny]
     serializer_class = PropertiesSalesSerializer
 
 
@@ -35,8 +36,8 @@ class PropertiesSalesCreate(generics.CreateAPIView):
     permission_classes = [AllowAny]
 
     def post(self, request):
-        PropertiesSalesCreateSerializer.validate(self, data=request.data)
-        return response.Response(status=status.HTTP_201_CREATED)
+        result = PropertiesSalesCreateSerializer.validate(self, data=request.data)
+        return response.Response(result, status=status.HTTP_201_CREATED)
 
 
 class PropertiesSalesUpdate(generics.RetrieveUpdateAPIView):
@@ -81,6 +82,7 @@ class PropertiesRentDetails(generics.RetrieveAPIView):
 
 class PropertiesRentDelete(generics.DestroyAPIView):
     queryset = Properties_Rent.objects.all()
+    permission_classes = [AllowAny]
     serializer_class = PropertiesRentSerializer
 
 
@@ -90,8 +92,8 @@ class PropertiesRentCreate(generics.CreateAPIView):
     permission_classes = [AllowAny]
 
     def post(self, request):
-        PropertiesRentCreateSerializer.validate(self, data=request.data)
-        return response.Response(status=status.HTTP_201_CREATED)
+        result = PropertiesRentCreateSerializer.validate(self, data=request.data)
+        return response.Response(result, status=status.HTTP_201_CREATED)
 
 
 class PropertiesRentUpdate(generics.RetrieveUpdateAPIView):

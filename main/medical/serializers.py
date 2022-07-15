@@ -76,4 +76,4 @@ class MedicalCreateSerializer(ModelSerializer):
         ad_id.product_id=medical_ad.id
         ad_id.save()
 
-        return data
+        return medical_ad

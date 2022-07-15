@@ -102,7 +102,7 @@ class PropertiesRentCreateSerializer(ModelSerializer):
         ad_id.product_id=properties_rent.id
         ad_id.save()
 
-        return data
+        return properties_rent
 
 
 class PropertiesSalesSerializer(ModelSerializer):
@@ -205,4 +205,4 @@ class PropertiesSalesCreateSerializer(ModelSerializer):
         ad_id.product_id=properties_sales.id
         ad_id.save()
 
-        return data
+        return properties_sales

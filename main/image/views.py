@@ -14,12 +14,13 @@ class ImageList(generics.ListAPIView):
     
     def get_queryset(self):
         if 'category' in self.kwargs:
+            active = (False if self.kwargs['active'] == 'false' else True)
             if self.kwargs['category'] == 'without-ad':
-                return model_name.objects.exclude(category=u'ad')
+                return model_name.objects.exclude(category=u'ad').filter(is_active=active)
             elif self.kwargs['category'] == 'without-ad-logo-general':
-                return model_name.objects.exclude(category__in=['ad', 'general', 'logo'])
+                return model_name.objects.exclude(category__in=['ad', 'general', 'logo']).filter(is_active=active)
             else:
-                return model_name.objects.filter(category=self.kwargs['category']).order_by('-created_date')[:4]
+                return model_name.objects.filter(category=self.kwargs['category'], is_active=active).order_by('-created_date')[:4]
         else:
             return model_name.objects.all().order_by('-created_date')[:4]
 
@@ -40,7 +41,7 @@ class ImageDelete(generics.DestroyAPIView):
 
 class ImageUpdate(generics.RetrieveUpdateAPIView):
     queryset = model_name.objects.all()
-    serializer_class = ImageSerializer
+    serializer_class = ImageUpdateSerializer
     permission_classes = [AllowAny]
 
     def perform_update(self, serializer):

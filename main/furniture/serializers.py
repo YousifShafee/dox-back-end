@@ -91,4 +91,4 @@ class FurnitureCreateSerializer(ModelSerializer):
         ad_id.product_id=furniture_ad.id
         ad_id.save()
 
-        return data
+        return furniture_ad

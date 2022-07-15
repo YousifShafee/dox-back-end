@@ -28,6 +28,7 @@ class AdDetails(generics.RetrieveAPIView):
 class AdDelete(generics.DestroyAPIView):
     queryset = model_name.objects.all()
     serializer_class = AdSerializer
+    permission_classes = [AllowAny]
 
 
 class AdCreate(generics.CreateAPIView):

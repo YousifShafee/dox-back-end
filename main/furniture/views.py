@@ -27,6 +27,7 @@ class FurnitureDetails(generics.RetrieveAPIView):
 
 class FurnitureDelete(generics.DestroyAPIView):
     queryset = model_name.objects.all()
+    permission_classes = [AllowAny]
     serializer_class = FurnitureSerializer
 
 
@@ -36,8 +37,8 @@ class FurnitureCreate(generics.CreateAPIView):
     permission_classes = [AllowAny]
 
     def post(self, request):
-        FurnitureCreateSerializer.validate(self, data=request.data)
-        return response.Response(status=status.HTTP_201_CREATED)
+        result = FurnitureCreateSerializer.validate(self, data=request.data)
+        return response.Response(result, status=status.HTTP_201_CREATED)
 
 
 class FurnitureUpdate(generics.RetrieveUpdateAPIView):

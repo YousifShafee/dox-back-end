@@ -27,6 +27,7 @@ class ElectronicDetails(generics.RetrieveAPIView):
 
 class ElectronicDelete(generics.DestroyAPIView):
     queryset = model_name.objects.all()
+    permission_classes = [AllowAny]
     serializer_class = ElectronicSerializer
 
 
@@ -36,8 +37,8 @@ class ElectronicCreate(generics.CreateAPIView):
     permission_classes = [AllowAny]
 
     def post(self, request):
-        ElectronicCreateSerializer.validate(self, data=request.data)
-        return response.Response(status=status.HTTP_201_CREATED)
+        result = ElectronicCreateSerializer.validate(self, data=request.data)
+        return response.Response(result, status=status.HTTP_201_CREATED)
 
 
 class ElectronicUpdate(generics.RetrieveUpdateAPIView):

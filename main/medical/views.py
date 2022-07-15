@@ -27,6 +27,7 @@ class MedicalDetails(generics.RetrieveAPIView):
 
 class MedicalDelete(generics.DestroyAPIView):
     queryset = model_name.objects.all()
+    permission_classes = [AllowAny]
     serializer_class = MedicalSerializer
 
 
@@ -36,8 +37,8 @@ class MedicalCreate(generics.CreateAPIView):
     permission_classes = [AllowAny]
 
     def post(self, request):
-        MedicalCreateSerializer.validate(self, data=request.data)
-        return response.Response(status=status.HTTP_201_CREATED)
+        result = MedicalCreateSerializer.validate(self, data=request.data)
+        return response.Response(result, status=status.HTTP_201_CREATED)
 
 
 class MedicalUpdate(generics.RetrieveUpdateAPIView):

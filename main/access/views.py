@@ -27,6 +27,7 @@ class AccessDetails(generics.RetrieveAPIView):
 
 class AccessDelete(generics.DestroyAPIView):
     queryset = model_name.objects.all()
+    permission_classes = [AllowAny]
     serializer_class = AccessSerializer
 
 
@@ -36,8 +37,8 @@ class AccessCreate(generics.CreateAPIView):
     permission_classes = [AllowAny]
 
     def post(self, request):
-        AccessCreateSerializer.validate(self, data=request.data)
-        return response.Response(status=status.HTTP_201_CREATED)
+        result = AccessCreateSerializer.validate(self, data=request.data)
+        return response.Response(result, status=status.HTTP_201_CREATED)
 
 
 class AccessUpdate(generics.RetrieveUpdateAPIView):

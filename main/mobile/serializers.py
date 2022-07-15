@@ -100,4 +100,4 @@ class MobileCreateSerializer(ModelSerializer):
         ad_id.product_id=mobile_ad.id
         ad_id.save()
 
-        return data
+        return mobile_ad

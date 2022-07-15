@@ -12,3 +12,8 @@ class ActiveImageSerializer(ModelSerializer):
     class Meta:
         model = Image
         fields = ['is_active']
+
+class ImageUpdateSerializer(ModelSerializer):
+    class Meta:
+        model = Image
+        fields = ['images']
