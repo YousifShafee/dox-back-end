@@ -170,14 +170,15 @@ class SendCodeSerializer(ModelSerializer):
 class ConfirmAccountSerializer(ModelSerializer):
     class Meta:
         model = User
-        fields = ['code', 'email']
+        fields = ['active_code', 'email']
 
     def validate(self, data):
-        user = User.objects.get(email=data['email'])
-        if user:
-            user.is_active = True
-            user.save()
-            return True
+        if "email" in data:
+            user = User.objects.get(email=data['email'])
+            if data['active_code'] == str(user.active_code):
+                user.is_active = True
+                user.save()
+                return True
         return False
 
 
