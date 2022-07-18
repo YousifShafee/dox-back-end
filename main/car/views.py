@@ -93,7 +93,7 @@ class CarRentCreate(generics.CreateAPIView):
 
     def post(self, request):
         result = CarRentCreateSerializer.validate(self, data=request.data)
-        return response.Response(result, status=status.HTTP_201_CREATED)
+        return response.Response({result.id}, status=status.HTTP_201_CREATED)
 
 
 class CarRentUpdate(generics.RetrieveUpdateAPIView):

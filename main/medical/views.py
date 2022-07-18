@@ -38,7 +38,7 @@ class MedicalCreate(generics.CreateAPIView):
 
     def post(self, request):
         result = MedicalCreateSerializer.validate(self, data=request.data)
-        return response.Response(result, status=status.HTTP_201_CREATED)
+        return response.Response({result.id}, status=status.HTTP_201_CREATED)
 
 
 class MedicalUpdate(generics.RetrieveUpdateAPIView):

@@ -1,5 +1,5 @@
 from main.general_fun import get_data_by_field
-from datetime import date
+import json
 from rest_framework import generics, views, response, status
 from .serializers import MobileSerializer, MobileCreateSerializer, MobileUpdateSerializer
 from main.models import Mobile_ad
@@ -39,7 +39,7 @@ class MobileCreate(generics.CreateAPIView):
 
     def post(self, request):
         result = MobileCreateSerializer.validate(self, data=request.data)
-        return response.Response(result, status=status.HTTP_201_CREATED)
+        return response.Response({result.id}, status=status.HTTP_201_CREATED)
 
 
 class MobileUpdate(generics.RetrieveUpdateAPIView):
