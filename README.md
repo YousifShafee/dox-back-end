@@ -5,8 +5,52 @@
 <img src="https://img.shields.io/badge/Python-239120?logo=python&logoColor=white" />
 <img src="https://img.shields.io/badge/Github-181717?logo=github&logoColor=white" />
 
-<hr class="dotted">
-It is an back-end side of Dox E-commerce system by Django. 
+Dox is an E-commerce project integrated with a chatbot app and Dox-Back-End is a server-side of it and is based on Django. A Dox-Back-End project that handel business and database actions on the site, which pass product data on API points to view it on the client-side project, and receive requests to create users, products ads and so on.
+
+There are seven types of products dox project deal with it to create ads for it:
+- Cars
+- Apartness (housing units)
+- Electronic devices (house devices)
+- Furniture
+- Medical devices
+- Mobiles
+- Accessories jewelry
+
+and there are four types of users:
+- admin user
+- update vice admin user
+- delete vice admin user
+- normal user
+
+### Admin user
+admin user has the roles:
+- create two types of vice users (update & delete) types and delete them
+- update and delete normal ads 
+- update and delete paid ads 
+- change a site logo
+- Add new and update products images
+- Add new and update premium company-images
+
+### Update vice admin user
+update vice admin user has the roles:
+- update and delete normal ads 
+- update and delete paid ads 
+- change a site logo
+- update products images
+- update premium company-images
+
+### Delete vice admin user
+delete vice admin user has the roles:
+- delete normal ads 
+- delete paid ads 
+- change a site logo
+- update products images
+- update premium company-images
+
+### Normal user
+noraml user has the roles:
+- create normal ad
+- create paid ad
 
 ## API Reference
 
