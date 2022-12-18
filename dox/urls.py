@@ -4,16 +4,16 @@ from django.contrib.staticfiles.urls import static
 from django.urls import include, path
 
 urlpatterns = [
-    path('main/car/', include('main.car.urls')),
-    path('main/access/', include('main.access.urls')),
-    path('main/electronic/', include('main.electronic.urls')),
-    path('main/furniture/', include('main.furniture.urls')),
-    path('main/medical/', include('main.medical.urls')),
-    path('main/mobile/', include('main.mobile.urls')),
-    path('main/ad/', include('main.ad.urls')),
-    path('main/user/', include('main.user.urls')),
-    path('main/image/', include('main.image.urls')),
-    path('main/properties/', include('main.properties.urls')),
+    path('car/', include('main.car.urls')),
+    path('access/', include('main.access.urls')),
+    path('electronic/', include('main.electronic.urls')),
+    path('furniture/', include('main.furniture.urls')),
+    path('medical/', include('main.medical.urls')),
+    path('mobile/', include('main.mobile.urls')),
+    path('ad/', include('main.ad.urls')),
+    path('user/', include('main.user.urls')),
+    path('image/', include('main.image.urls')),
+    path('properties/', include('main.properties.urls')),
     path('admin/', admin.site.urls)
 ]
 

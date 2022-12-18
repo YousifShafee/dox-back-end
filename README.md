@@ -77,153 +77,153 @@ Application has the following models.
   ### Cars model
 
     - GET
-      - main/car/rent/
-      - main/car/rent/email/<user_id>/
-      - main/car/rent/<car_id>/
-      - main/car/rent/search/
-      - main/car/sales/
-      - main/car/sales/email/<user_id>/
-      - main/car/sales/<car_id>/
-      - main/car/sales/search/
+      - car/rent/
+      - car/rent/email/<user_id>/
+      - car/rent/<car_id>/
+      - car/rent/search/
+      - car/sales/
+      - car/sales/email/<user_id>/
+      - car/sales/<car_id>/
+      - car/sales/search/
     - POST
-      - main/car/rent/add/
-      - main/car/sales/add/
+      - car/rent/add/
+      - car/sales/add/
     - PUT
-      - main/car/rent/<car_id>/edit/
-      - main/car/sales/<car_id>/edit/
+      - car/rent/<car_id>/edit/
+      - car/sales/<car_id>/edit/
     - DELETE
-      - main/car/rent/<car_id>/delete/
-      - main/car/sales/<car_id>/delete/
+      - car/rent/<car_id>/delete/
+      - car/sales/<car_id>/delete/
 
   ### Access model
 
     - GET
-      - main/access/
-      - main/access/email/<user_id>/
-      - main/access/<access_id>/
-      - main/access/search/
+      - access/
+      - access/email/<user_id>/
+      - access/<access_id>/
+      - access/search/
     - POST
-      - main/access/add/
+      - access/add/
     - PUT
-      - main/access/<access_id>/edit/
+      - access/<access_id>/edit/
     - DELETE
-      - main/access/<access_id>/delete/
+      - access/<access_id>/delete/
 
   ### Electronic model
 
     - GET
-      - main/electronic/
-      - main/electronic/email/<user_id>/
-      - main/electronic/<electronic_id>/
-      - main/electronic/search/
+      - electronic/
+      - electronic/email/<user_id>/
+      - electronic/<electronic_id>/
+      - electronic/search/
     - POST
-      - main/electronic/add/
+      - electronic/add/
     - PUT
-      - main/electronic/<electronic_id>/edit/
+      - electronic/<electronic_id>/edit/
     - DELETE
-      - main/electronic/<electronic_id>/delete/
+      - electronic/<electronic_id>/delete/
 
   ### Furniture model
 
     - GET
-      - main/furniture/
-      - main/furniture/email/<user_id>/
-      - main/furniture/<furniture_id>/
-      - main/furniture/search/
+      - furniture/
+      - furniture/email/<user_id>/
+      - furniture/<furniture_id>/
+      - furniture/search/
     - POST
-      - main/furniture/add/
+      - furniture/add/
     - PUT
-      - main/furniture/<furniture_id>/edit/
+      - furniture/<furniture_id>/edit/
     - DELETE
-      - main/furniture/<furniture_id>/delete/
+      - furniture/<furniture_id>/delete/
 
   ### Medical model
 
     - GET
-      - main/medical/
-      - main/medical/email/<user_id>/
-      - main/medical/<medical_id>/
-      - main/medical/search/
+      - medical/
+      - medical/email/<user_id>/
+      - medical/<medical_id>/
+      - medical/search/
     - POST
-      - main/medical/add/
+      - medical/add/
     - PUT
-      - main/medical/<medical_id>/edit/
+      - medical/<medical_id>/edit/
     - DELETE
-      - main/medical/<medical_id>/delete/
+      - medical/<medical_id>/delete/
 
   ### Mobile model
 
     - GET
-      - main/mobile/
-      - main/mobile/email/<user_id>/
-      - main/mobile/<mobile_id>/
-      - main/mobile/search/
+      - mobile/
+      - mobile/email/<user_id>/
+      - mobile/<mobile_id>/
+      - mobile/search/
     - POST
-      - main/mobile/add/
+      - mobile/add/
     - PUT
-      - main/mobile/<mobile_id>/edit/
+      - mobile/<mobile_id>/edit/
     - DELETE
-      - main/mobile/<mobile_id>/delete/
+      - mobile/<mobile_id>/delete/
 
   ### Ad model
 
     - GET
-      - main/ad/
-      - main/ad/email/<user_id>/
-      - main/ad/<ad_id>/
-      - main/ad/search/
+      - ad/
+      - ad/email/<user_id>/
+      - ad/<ad_id>/
+      - ad/search/
     - POST
-      - main/ad/add/
+      - ad/add/
     - PUT
-      - main/ad/<ad_id>/edit/
+      - ad/<ad_id>/edit/
     - DELETE
-      - main/ad/<ad_id>/delete/
+      - ad/<ad_id>/delete/
 
   ### Image model
 
     - GET
-      - main/image/
-      - main/image/search/
-      - main/image/<category_name>/<active_status>/
+      - image/
+      - image/search/
+      - image/<category_name>/<active_status>/
     - POST
-      - main/image/add/
+      - image/add/
     - PUT
-      - main/image/<image_id>/active/
-      - main/image/<image_id>/edit/
+      - image/<image_id>/active/
+      - image/<image_id>/edit/
     - DELETE
-      - main/image/<image_id>/delete/
+      - image/<image_id>/delete/
 
   ### Properties model
 
     - GET
-      - main/properties/
-      - main/properties/email/<user_id>/
-      - main/properties/<properties_id>/
-      - main/properties/search/
+      - properties/
+      - properties/email/<user_id>/
+      - properties/<properties_id>/
+      - properties/search/
     - POST
-      - main/properties/add/
+      - properties/add/
     - PUT
-      - main/properties/<properties_id>/edit/
+      - properties/<properties_id>/edit/
     - DELETE
-      - main/properties/<properties_id>/delete/
+      - properties/<properties_id>/delete/
   
   ### User model
 
     - GET
-      - main/user/
-      - main/user/<user_id>/
-      - main/user/search/
-      - main/user/logout/
+      - user/
+      - user/<user_id>/
+      - user/search/
+      - user/logout/
     - POST
-      - main/user/add/
-      - main/user/login/
-      - main/user/confirm_account/
-      - main/user/send_code/
-      - main/user/change_pass/
+      - user/add/
+      - user/login/
+      - user/confirm_account/
+      - user/send_code/
+      - user/change_pass/
     - PUT
-      - main/user/<user_id>/edit/
+      - user/<user_id>/edit/
     - DELETE
-      - main/user/<user_id>/delete/
+      - user/<user_id>/delete/
 
 ## Some technical information:
 
