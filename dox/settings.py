@@ -14,6 +14,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
+# Google SMTP server
+
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'yousifshafee@gmail.com'
 EMAIL_HOST_PASSWORD = 'sswzjfenipiekyjv'
