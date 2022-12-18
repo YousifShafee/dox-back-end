@@ -38,7 +38,7 @@ class UserDetails(generics.RetrieveAPIView):
     queryset = model_name.objects.all()
     serializer_class = UsersSerializer
     authentication_classes = [authentication.SessionAuthentication]
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [AllowAny]
 
 
 class UserDelete(generics.DestroyAPIView):
