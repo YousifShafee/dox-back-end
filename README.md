@@ -22,7 +22,7 @@ and there are four types of users:
 - delete vice admin user
 - normal user
 
-### Admin user
+### **Admin user**
 admin user has the roles:
 - create two types of vice users (update & delete) types and delete them
 - update and delete normal ads 
@@ -31,7 +31,7 @@ admin user has the roles:
 - Add new and update products images
 - Add new and update premium company-images
 
-### Update vice admin user
+### **Update vice admin user**
 update vice admin user has the roles:
 - update and delete normal ads 
 - update and delete paid ads 
@@ -39,7 +39,7 @@ update vice admin user has the roles:
 - update products images
 - update premium company-images
 
-### Delete vice admin user
+### **Delete vice admin user**
 delete vice admin user has the roles:
 - delete normal ads 
 - delete paid ads 
@@ -47,12 +47,12 @@ delete vice admin user has the roles:
 - update products images
 - update premium company-images
 
-### Normal user
+### **Normal user**
 noraml user has the roles:
 - create normal ad
 - create paid ad
 
-## API Reference
+## **API Reference**
 
 ### Error Handling
 
@@ -225,7 +225,7 @@ Application has the following models.
     - DELETE
       - user/<user_id>/delete/
 
-## Some technical information:
+## **About**:
 
 - Django 3.0 
 - Django REST Framework 3.13.1
@@ -233,7 +233,7 @@ Application has the following models.
 - Django Import Export 2.8.0
 
 
-## To Install:
+## **Installation**:
 
 Cloning the Repository:
 
@@ -270,5 +270,16 @@ Create a super user:
 
 ```
 $ python manage.py createsuperuser <admin_name>
-
 ```
+
+## **TODO Topics**
+###  **Permissions Level**
+This project is missing permissions model on API Requests, now there all assigned as `AllowAny` and this cause unsafe operations on data.
+
+The planned permissions level is:
+- IsSuperAdminUser
+- IsNormalAdminUser
+- IsUpdateAdminUser
+- IsDeleteAdminUser
+- IsAuthenticatedOrReadOnly
+- AllowAny
