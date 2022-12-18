@@ -1,4 +1,3 @@
-from pyparsing import empty
 from main.general_fun import get_data_by_field
 from rest_framework import generics, authentication
 from rest_framework.views import APIView
@@ -157,7 +156,7 @@ class UserSearch(APIView):
 
     def post(self, request):
         q = get_data_by_field(request.data, search_dict)
-        if q is empty:
+        if q is {}:
             model_data = model_name.objects.all()
         else:
             model_data = model_name.objects.filter(**q)
