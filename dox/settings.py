@@ -17,8 +17,8 @@ ALLOWED_HOSTS = ["*"]
 # Google SMTP server
 
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'yousifshafee@gmail.com'
-EMAIL_HOST_PASSWORD = 'sswzjfenipiekyjv'
+EMAIL_HOST_USER = os.environ.get('smtpHostMail')
+EMAIL_HOST_PASSWORD = os.environ.get('smtpHostPassword')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
