@@ -2,23 +2,9 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Run Django Server",
+            "label": "Creating Environments",
             "type": "shell",
-            "command": "source ./venv/bin/activate && python manage.py runserver",
-            "problemMatcher": [],
-            "group": "build"
-        },
-        {
-            "label": "Make Migrations",
-            "type": "shell",
-            "command": "source ./venv/bin/activate && python manage.py makemigrations",
-            "problemMatcher": [],
-            "group": "build"
-        },
-        {
-            "label": "Migrate",
-            "type": "shell",
-            "command": "source ./venv/bin/activate && python manage.py migrate",
+            "command": "python -m venv venv",
             "problemMatcher": [],
             "group": "build"
         },
@@ -30,9 +16,23 @@
             "group": "build"
         },
         {
-            "label": "Creating Environments",
+            "label": "Migrate",
             "type": "shell",
-            "command": "python -m venv venv",
+            "command": "source ./venv/bin/activate && python manage.py migrate",
+            "problemMatcher": [],
+            "group": "build"
+        },
+        {
+            "label": "Run Django Server",
+            "type": "shell",
+            "command": "source ./venv/bin/activate && python manage.py runserver",
+            "problemMatcher": [],
+            "group": "build"
+        },
+        {
+            "label": "Make Migrations",
+            "type": "shell",
+            "command": "source ./venv/bin/activate && python manage.py makemigrations",
             "problemMatcher": [],
             "group": "build"
         },
